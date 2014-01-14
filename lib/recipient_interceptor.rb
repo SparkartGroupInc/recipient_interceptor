@@ -4,6 +4,7 @@ class RecipientInterceptor
   def initialize(recipients, options = {})
     @recipients = normalize_to_array(recipients)
     @subject_prefix = options[:subject_prefix]
+    @prefix_original_recipient_to_subject = options[:prefix_original_recipient_to_subject]
   end
 
   def delivering_email(message)
@@ -25,6 +26,10 @@ class RecipientInterceptor
   end
 
   def add_subject_prefix(message)
+    if @prefix_original_recipient_to_subject
+      message.subject = "[#{message.to.join(",")}] #{message.subject}"
+    end
+
     if @subject_prefix
       message.subject = "#{@subject_prefix} #{message.subject}"
     end

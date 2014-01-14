@@ -27,11 +27,12 @@ From the command line:
 Options
 -------
 
-Optionally prefix the subject line:
+Optionally prefix the subject line and/or include original recipient's email address in the subject:
 
     Mail.register_interceptor RecipientInterceptor.new(
       ENV['EMAIL_RECIPIENTS'],
-      subject_prefix: '[STAGING]'
+      subject_prefix: '[STAGING]',
+      prefix_original_recipient_to_subject: true
     )
 
 Credits
