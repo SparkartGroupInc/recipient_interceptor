@@ -59,6 +59,17 @@ describe RecipientInterceptor do
     expect(response.subject).to eq '[STAGING] some subject'
   end
 
+  it 'prefixes subject with original recipients when option is set' do
+    Mail.register_interceptor RecipientInterceptor.new(
+      recipient_string,
+      prefix_original_recipient_to_subject: true
+    )
+
+    response = deliver_mail
+
+    expect(response.subject).to eq "[original.to@example.com] some subject"
+  end
+
   def recipient_string
     'staging@example.com'
   end
